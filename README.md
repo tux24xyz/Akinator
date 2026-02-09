@@ -11,8 +11,10 @@ GEMINI_API_KEY=你的_API_KEY_貼在這裡
 FLASK_SECRET=這是一串隨機字串用來加密Session # 亂寫就好
 ```
 
-貼上 Google AI Studio 的 API Key 就可以用了，預設模型是 `gemini-2.5-flash`。
+貼上 Google AI Studio 的 API Key ，預設模型是 `gemini-2.5-flash`。
+
+本地運行 `app.py` 後開啟出現的連結，就能在瀏覽器中玩。
 
 ## System prompt
 
-目前語言模型的角色設定是逆轉裁判系列的男主角：成步堂龍一。可以自己修改改
+目前語言模型的角色設定是逆轉裁判系列的男主角：成步堂龍一。可以自己修改。
