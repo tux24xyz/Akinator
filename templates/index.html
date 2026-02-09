@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>二次元神燈精靈 AI</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; background-color: #f0f2f5; }
+        .chat-box { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); height: 400px; overflow-y: auto; margin-bottom: 20px; }
+        .msg { margin-bottom: 15px; padding: 10px; border-radius: 8px; }
+        .user { background-color: #e3f2fd; text-align: right; }
+        .model { background-color: #f1f8e9; text-align: left; border-left: 5px solid #8bc34a; }
+        .input-area { display: flex; gap: 10px; }
+        input { flex-grow: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        button { padding: 10px 20px; cursor: pointer; background: #4caf50; color: white; border: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h2>🔮 二次元神燈精靈</h2>
+    
+    <div class="chat-box">
+    {% for message in history %}
+        {# 跳過第一條 System Prompt #}
+        {% if not loop.first %}
+            <div class="msg {{ message.role }}">
+                <strong>{{ "你" if message.role == "user" else "精靈" }}:</strong> 
+                {# 這裡從 message.parts[0] 改成 message.text #}
+                {{ message.text }}
+            </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+
+    <form method="POST" class="input-area">
+        <input type="text" name="user_input" placeholder="回答 是/否/不一定..." required autofocus>
+        <button type="submit">發送</button>
+    </form>
+
+    <br>
+    <a href="/reset" style="color: #999; text-decoration: none; font-size: 0.8em;">重新開始遊戲</a>
+    
+    <script>
+        window.onload = function() {
+            // 1. 自動捲動到對話框底部
+            const chatBox = document.querySelector('.chat-box');
+            if (chatBox) {
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+
+            // 2. 防止重複提交
+            const form = document.querySelector('form');
+            if (form) {
+                form.onsubmit = function() {
+                    const btn = form.querySelector('button');
+                    btn.disabled = true;
+                    btn.innerText = "讀取中...";
+                };
+            }
+
+            // 3. 讓輸入框自動取得焦點
+            const inputField = document.querySelector('input[name="user_input"]');
+            if (inputField) {
+                inputField.focus();
+            }
+        };
+    </script>
+</body>
+</html>
